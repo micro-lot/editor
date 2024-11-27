@@ -1,4 +1,4 @@
-import { CONTAINER_GROUP } from '@/constants';
+import { CONTAINER_GROUP } from '@/core';
 import { oneOrMore } from '@/utilities';
 import { NodeSpec } from 'prosemirror-model';
 
