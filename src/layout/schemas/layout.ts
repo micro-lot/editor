@@ -59,20 +59,21 @@ export const layoutNode = (): Record<string, NodeSpec> => {
      */
     toDOM: (node) => {
       const attrs = node.attrs as LayoutAttributes;
-      const classes = ['micro-lot-layout'];
+      const layoutBaseClass = `${CLASS_NAME_BASE}-layout`;
+      const classes = [layoutBaseClass];
 
       const type = attrs.type;
 
       if (type) {
-        classes.push(`${CLASS_NAME_BASE}-layout-${type}`);
+        classes.push(`${layoutBaseClass}-${type}`);
       }
 
       if (isFlexTypeLayout(attrs) && attrs.direction) {
-        classes.push(`${CLASS_NAME_BASE}-layout-${attrs.direction}`);
+        classes.push(`${layoutBaseClass}-${attrs.direction}`);
       }
 
       if (isFlexTypeLayout(attrs) && attrs.alignItems) {
-        classes.push(`${CLASS_NAME_BASE}-layout-${attrs.alignItems}`);
+        classes.push(`${layoutBaseClass}-${attrs.alignItems}`);
       }
 
       return [

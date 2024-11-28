@@ -1,0 +1,32 @@
+$layout-types: flex, grid;
+$flex-directions: row, row-reverse, column, column-reverse;
+$justify-contents: start, center, space-between, space-around, space-evenly;
+$align-items: stretch, center, start, end;
+
+.ProseMirror {
+  .micro-lot-layout {
+    @each $layout-type in $layout-types {
+      &-#{$layout-type} {
+        display: $layout-type;
+      }
+    }
+
+    @each $flex-direction in $flex-directions {
+      &-#{$flex-direction} {
+        flex-direction: $flex-direction;
+      }
+    }
+
+    @each $justify-content in $justify-contents {
+      &-#{$justify-content} {
+        justify-content: $justify-content;
+      }
+    }
+
+    @each $align-item in $align-items {
+      &-#{$align-item} {
+        align-items: $align-item;
+      }
+    }
+  }
+}

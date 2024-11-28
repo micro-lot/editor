@@ -12,6 +12,7 @@ import { EditorView } from 'prosemirror-view';
 
 import './style.css';
 import 'prosemirror-view/style/prosemirror.css';
+import './editor.scss';
 
 console.log('hello world');
 
