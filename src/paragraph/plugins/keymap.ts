@@ -7,7 +7,7 @@ export interface ParagraphKeyMapPluginConfig {
   nodeType: NodeType;
 }
 
-export const paragraphKeyMapPlugin = (configs: ParagraphKeyMapPluginConfig) => {
+export const paragraphKeyMapPlugins = (configs: ParagraphKeyMapPluginConfig) => {
   const key = mac ? 'Mod-0' : 'Ctrl-0';
 
   return [
@@ -22,7 +22,6 @@ export const paragraphKeyMapPlugin = (configs: ParagraphKeyMapPluginConfig) => {
         // paragraph로 변환 시도
         const result = setBlockType(configs.nodeType)(state, dispatch, view);
 
-        console.log('Paragraph conversion attempted:', result); // 디버깅용
         return result;
       },
     }),

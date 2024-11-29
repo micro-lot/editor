@@ -2,15 +2,24 @@
 
 ```plain
 src/
-..some-node/
-..plugins/
-....some-plugin.ts
-....index.ts
-..schemas/
-....some-node.ts
-....index.ts
-..some-folders/
-..index.ts
+  some-node/
+    commands/
+      some-command.ts
+      index.ts
+    plugins/
+      some-plugin.ts
+      index.ts
+    schemas/
+      some-node.ts
+      index.ts
+    some-folders/
+      index.ts
 ```
 
-### Schema
+- model
+  - schema
+  - plugin
+  - command: 재사용 가능한 핵심 로직 (노드 생성 등)
+- state
+  - transaction
+- view

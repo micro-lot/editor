@@ -1,7 +1,8 @@
 import { docNode } from '@/doc';
 import { layoutNode } from '@/layout';
+import { layoutPlugins } from '@/layout/plugins';
 import { paragraphNode } from '@/paragraph';
-import { paragraphKeyMapPlugin } from '@/paragraph/plugins';
+import { paragraphPlugins } from '@/paragraph/plugins';
 import { textNode } from '@/text';
 import { baseKeymap } from 'prosemirror-commands';
 import { history } from 'prosemirror-history';
@@ -29,11 +30,16 @@ const sampleDoc: Node = microLotSchema.node('doc', null, [
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph.')]),
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph2.')]),
   ]),
+  microLotSchema.node('layout', null),
 ]);
 const samplePlugins: Plugin[] = [
   keymap(baseKeymap),
   history(),
-  ...paragraphKeyMapPlugin({ nodeType: microLotSchema.nodes.paragraph }),
+  ...layoutPlugins({
+    layoutNodeType: microLotSchema.nodes.layout,
+    defaultContentNodeType: microLotSchema.nodes.paragraph,
+  }),
+  ...paragraphPlugins({ nodeType: microLotSchema.nodes.paragraph }),
 ];
 const state: EditorState = EditorState.create({
   schema: microLotSchema,

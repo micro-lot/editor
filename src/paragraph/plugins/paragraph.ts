@@ -1,5 +1,4 @@
-import { paragraphKeyMapPlugin } from './keymap';
-
+import { paragraphKeyMapPlugins } from '@/paragraph/plugins/keymap';
 import { NodeType } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
 
@@ -11,7 +10,7 @@ export const paragraphPlugins = (configs: ParagraphPluginConfigs): Plugin[] => {
   const plugins: Plugin[] = [];
 
   plugins.push(
-    ...paragraphKeyMapPlugin({
+    ...paragraphKeyMapPlugins({
       nodeType: configs.nodeType,
     }),
   );
