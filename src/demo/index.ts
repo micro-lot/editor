@@ -1,12 +1,10 @@
-import { historyPlugins } from '@/core/plugins';
+import { historyPlugins, keyMapPlugins } from '@/core';
 import { docNode } from '@/doc';
 import { layoutNode } from '@/layout';
 import { layoutPlugins } from '@/layout/plugins';
 import { paragraphNode } from '@/paragraph';
 import { paragraphPlugins } from '@/paragraph/plugins';
 import { textNode } from '@/text';
-import { baseKeymap } from 'prosemirror-commands';
-import { keymap } from 'prosemirror-keymap';
 import { Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -14,8 +12,6 @@ import { EditorView } from 'prosemirror-view';
 import './style.css';
 import 'prosemirror-view/style/prosemirror.css';
 import './editor.scss';
-
-console.log('hello world');
 
 const microLotSchema: Schema = new Schema({
   nodes: {
@@ -33,7 +29,7 @@ const sampleDoc: Node = microLotSchema.node('doc', null, [
   microLotSchema.node('layout', null),
 ]);
 const samplePlugins: Plugin[] = [
-  keymap(baseKeymap),
+  ...keyMapPlugins(),
   ...historyPlugins(),
   ...layoutPlugins({
     layoutNodeType: microLotSchema.nodes.layout,
