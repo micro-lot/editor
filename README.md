@@ -1,3 +1,9 @@
+## How to run a demo
+
+```shell
+npm run dev
+```
+
 ## Folder structure
 
 ```plain
