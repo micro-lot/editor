@@ -1,0 +1,37 @@
+@use './variables' as *;
+
+.micro-lot-layout {
+  width: auto;
+  min-height: 1rem;
+
+  &-flex {
+    display: flex;
+    flex-wrap: wrap;
+
+    & * {
+      min-width: 0;
+    }
+  }
+
+  &-grid {
+    display: grid;
+  }
+
+  @each $flex-direction in $flex-directions {
+    &-#{$flex-direction} {
+      flex-direction: $flex-direction;
+    }
+  }
+
+  @each $justify-content in $justify-contents {
+    &-#{$justify-content} {
+      justify-content: $justify-content;
+    }
+  }
+
+  @each $align-item in $align-items {
+    &-#{$align-item} {
+      align-items: $align-item;
+    }
+  }
+}

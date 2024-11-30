@@ -1,0 +1,11 @@
+.ProseMirror {
+  &[contenteditable='true'] {
+    .micro-lot-layout {
+      border: 1px dashed lightgrey;
+
+      &:hover {
+        border-color: #666;
+      }
+    }
+  }
+}

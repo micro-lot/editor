@@ -1,1 +1,4 @@
-@use '@/layout/styles/layout.scss';
+@use '@/core/styles/core.scss';
+
+@use '@/layout/styles/common.scss';
+@use '@/layout/styles/editor.scss';
