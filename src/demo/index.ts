@@ -10,7 +10,6 @@ import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 
 import './style.css';
-import 'prosemirror-view/style/prosemirror.css';
 import './editor.scss';
 
 const result: HTMLElement = document.getElementById('result')!;
