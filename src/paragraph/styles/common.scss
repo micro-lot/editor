@@ -1,0 +1,15 @@
+@use '@/core/styles/variables' as *;
+
+@use './variables' as *;
+
+.#{$base-class-name}-paragraph {
+  width: auto;
+  margin: 0;
+  text-align: start;
+
+  @each $text-align in $text-aligns {
+    &-#{$text-align} {
+      text-align: $text-align;
+    }
+  }
+}

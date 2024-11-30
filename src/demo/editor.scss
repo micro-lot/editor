@@ -1,4 +1,16 @@
 @use '@/core/styles/core.scss';
 
-@use '@/layout/styles/common.scss';
-@use '@/layout/styles/editor.scss';
+@use '@/layout/styles/common.scss' as *;
+@use '@/layout/styles/editor.scss' as *;
+
+@use '@/paragraph/styles/common.scss' as *;
+@use '@/paragraph/styles/editor.scss' as *;
+
+#editor {
+  border: 1px solid #eaeaea;
+  border-radius: 1rem;
+
+  &:has(.ProseMirror-focused) {
+    border-color: lightslategray;
+  }
+}

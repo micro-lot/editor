@@ -6,9 +6,10 @@ export interface AlignableAttrs {
 
 export const TEXT_ALIGNMENT = {
   DEFAULT: null,
-  LEFT: 'left',
+  START: 'start',
+  END: 'end',
   CENTER: 'center',
-  RIGHT: 'right',
+  JUSTIFY: 'justify',
 } as const;
 
 export type TextAlignment = (typeof TEXT_ALIGNMENT)[keyof typeof TEXT_ALIGNMENT];

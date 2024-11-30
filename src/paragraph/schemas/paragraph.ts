@@ -8,6 +8,7 @@ export const paragraphNode = (): Record<string, NodeSpec> => {
   const nodeSpec: NodeSpec = {
     group: BLOCK_GROUP,
     content: zeroOrMore(INLINE_GROUP),
+    draggable: true,
     attrs: {
       align: { default: null },
     },
@@ -29,14 +30,14 @@ export const paragraphNode = (): Record<string, NodeSpec> => {
       const classes = [`${CLASS_NAME_BASE}-paragraph`];
 
       if (attrs.align) {
-        classes.push(`${CLASS_NAME_BASE}-align-${attrs.align}`);
+        classes.push(`${CLASS_NAME_BASE}-paragraph-align-${attrs.align}`);
       }
 
       return [
         'p',
         {
           class: classes.join(' '),
-          'data-text-align': attrs.align || TEXT_ALIGNMENT.LEFT,
+          'data-text-align': attrs.align || TEXT_ALIGNMENT.START,
         },
         0,
       ];
