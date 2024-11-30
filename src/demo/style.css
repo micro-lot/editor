@@ -6,3 +6,17 @@
   padding: 2rem;
   text-align: center;
 }
+
+#result {
+  border: 1px solid lightslategray;
+  border-radius: 1rem;
+}
+
+pre {
+  font-size: 0.625rem;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 1rem;
+  border: 1px solid lightslategray;
+  text-align: left;
+}
