@@ -1,4 +1,4 @@
-import { historyPlugins, keyMapPlugins } from '@/core';
+import { historyPlugins, keyMapPlugins, setPadding } from '@/core';
 import { docNode } from '@/doc';
 import { layoutNode } from '@/layout';
 import { layoutPlugins } from '@/layout/plugins';
@@ -24,7 +24,7 @@ const microLotSchema: Schema = new Schema({
   },
 });
 const sampleDoc: Node = microLotSchema.node('doc', null, [
-  microLotSchema.node('layout', null, [
+  microLotSchema.node('layout', { paddingTop: 10 }, [
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph.')]),
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph2.')]),
   ]),
@@ -55,7 +55,30 @@ const editorView: EditorView = new EditorView(document.getElementById('editor'),
       DOMSerializer.fromSchema(microLotSchema).serializeFragment(newState.doc.content),
     );
     jsonResult.innerHTML = JSON.stringify(newState.doc.toJSON(), null, 2);
+
+    if (tr.selectionSet) {
+      console.log(newState.selection);
+    }
   },
 });
 
 console.log(editorView);
+
+const initEditorTools = () => {
+  const paddingInput = document.getElementById('paddingInput') as HTMLInputElement;
+  const setPaddingButton = document.getElementById('setPadding') as HTMLButtonElement;
+
+  setPaddingButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    if (!paddingInput.value) {
+      return;
+    }
+
+    const value = parseInt(paddingInput.value);
+    //
+    setPadding(value)(editorView.state, editorView.dispatch);
+  });
+};
+
+initEditorTools();

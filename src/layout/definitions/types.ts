@@ -1,5 +1,8 @@
 import { ALIGN_ITEMS, FLEX_DIRECTION, LAYOUT_TYPE } from './constants';
 
+import { PaddedNodeSpec, PaddingAttributes } from '@/core';
+import { NodeSpec } from 'prosemirror-model';
+
 export type LayoutType = (typeof LAYOUT_TYPE)[keyof typeof LAYOUT_TYPE];
 
 export type FlexDirection = (typeof FLEX_DIRECTION)[keyof typeof FLEX_DIRECTION];
@@ -15,7 +18,7 @@ export interface GridAttributes {
   some: string;
 }
 
-export interface LayoutAttributesBase {
+export interface LayoutAttributesBase extends PaddingAttributes {
   type: LayoutType;
 }
 
@@ -30,3 +33,5 @@ export const isGridTypeLayout = (
   layoutAttributes: LayoutAttributes,
 ): layoutAttributes is LayoutAttributesBase & GridAttributes =>
   layoutAttributes.type === LAYOUT_TYPE.GRID;
+
+export type LayoutNodeSpec = NodeSpec & PaddedNodeSpec;

@@ -5,13 +5,13 @@ import {
   JUSTIFY_CONTENT,
   LAYOUT_TYPE,
   LayoutAttributes,
+  LayoutNodeSpec,
   isFlexTypeLayout,
 } from '@/layout/definitions';
 import { zeroOrMore } from '@/utilities';
-import { NodeSpec } from 'prosemirror-model';
 
-export const layoutNode = (): Record<string, NodeSpec> => {
-  const nodeSpec: NodeSpec = {
+export const layoutNode = (): Record<string, LayoutNodeSpec> => {
+  const nodeSpec: LayoutNodeSpec = {
     group: CONTAINER_GROUP,
     content: zeroOrMore(BLOCK_GROUP),
     draggable: true,
@@ -20,6 +20,15 @@ export const layoutNode = (): Record<string, NodeSpec> => {
        * dom.attrs.type 아래에 값을 가지는 것과 같음
        */
       type: { default: LAYOUT_TYPE.FLEX },
+      paddingTop: { default: 0 },
+      paddingRight: { default: 0 },
+      paddingBottom: { default: 0 },
+      paddingLeft: { default: 0 },
+    },
+    meta: {
+      applicableStyles: {
+        padding: true,
+      },
     },
     /**
      * DOM에서 프로즈미러 데이터로 변환할 수 있도록 정의
@@ -30,6 +39,7 @@ export const layoutNode = (): Record<string, NodeSpec> => {
         getAttrs: (node) => {
           const dom = node;
           const type = dom.getAttribute('data-type');
+          const style = dom.style;
           let attrs = {};
 
           if (type === LAYOUT_TYPE.FLEX) {
@@ -49,6 +59,10 @@ export const layoutNode = (): Record<string, NodeSpec> => {
           }
 
           return {
+            paddingTop: parseInt(style.paddingTop) || 0,
+            paddingRight: parseInt(style.paddingRight) || 0,
+            paddingBottom: parseInt(style.paddingBottom) || 0,
+            paddingLeft: parseInt(style.paddingLeft) || 0,
             type: type || LAYOUT_TYPE.FLEX,
             ...attrs,
           };
@@ -62,7 +76,15 @@ export const layoutNode = (): Record<string, NodeSpec> => {
       const attrs = node.attrs as LayoutAttributes;
       const layoutBaseClass = `${CLASS_NAME_BASE}-layout`;
       const classes = [layoutBaseClass];
-
+      const style = Object.entries({
+        'padding-top': attrs.paddingTop ? `${attrs.paddingTop}px` : null,
+        'padding-right': attrs.paddingRight ? `${attrs.paddingRight}px` : null,
+        'padding-bottom': attrs.paddingBottom ? `${attrs.paddingBottom}px` : null,
+        'padding-left': attrs.paddingLeft ? `${attrs.paddingLeft}px` : null,
+      })
+        .filter(([_, value]) => value)
+        .map((style) => style.join(':'))
+        .join(';');
       const type = attrs.type;
 
       if (type) {
@@ -82,6 +104,7 @@ export const layoutNode = (): Record<string, NodeSpec> => {
         {
           class: classes.join(' '),
           'data-type': type || LAYOUT_TYPE.FLEX,
+          style,
         },
         0,
       ];
