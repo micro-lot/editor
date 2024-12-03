@@ -9,8 +9,10 @@ import { DOMSerializer, Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 
-import './style.css';
+import { horizontalRuleNode } from '@/horizontal-rule';
+import { setHorizontalRuleColor } from '@/horizontal-rule/commands';
 import './editor.scss';
+import './style.css';
 
 const result: HTMLElement = document.getElementById('result')!;
 const jsonResult: HTMLElement = document.getElementById('jsonResult')!;
@@ -21,15 +23,19 @@ const microLotSchema: Schema = new Schema({
     ...textNode(),
     ...layoutNode(),
     ...paragraphNode(),
+    ...horizontalRuleNode(),
   },
 });
+
 const sampleDoc: Node = microLotSchema.node('doc', null, [
   microLotSchema.node('layout', { paddingTop: 10 }, [
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph.')]),
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph2.')]),
   ]),
+  microLotSchema.node('horizontalRule', null),
   microLotSchema.node('layout', null),
 ]);
+
 const samplePlugins: Plugin[] = [
   ...keyMapPlugins(),
   ...historyPlugins(),
@@ -68,6 +74,10 @@ console.log(editorView);
 const initEditorTools = () => {
   const paddingInput = document.getElementById('paddingInput') as HTMLInputElement;
   const setPaddingButton = document.getElementById('setPadding') as HTMLButtonElement;
+  const colorInput = document.getElementById('horizontalRuleColorInput') as HTMLInputElement;
+  const horizontalRuleColorButton = document.getElementById(
+    'setHorizontalRuleColor',
+  ) as HTMLButtonElement;
 
   setPaddingButton.addEventListener('click', (event) => {
     event.preventDefault();
@@ -79,6 +89,13 @@ const initEditorTools = () => {
     const value = parseInt(paddingInput.value);
     //
     setPadding(value)(editorView.state, editorView.dispatch);
+  });
+
+  horizontalRuleColorButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const color = colorInput.value;
+    setHorizontalRuleColor(color)(editorView.state, editorView.dispatch);
   });
 };
 
