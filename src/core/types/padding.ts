@@ -49,7 +49,9 @@ export const isPaddingShorthand = (update: PaddingUpdate): update is PaddingShor
 export const isPaddingXYShorthand = (update: PaddingUpdate): update is PaddingXYShorthand =>
   Array.isArray(update) && update.length === 2;
 
-export const isNotShorthand = (update: PaddingUpdate): update is Partial<PaddingAttributes> =>
+export const isNotPaddingShorthand = (
+  update: PaddingUpdate,
+): update is Partial<PaddingAttributes> =>
   !Array.isArray(update) &&
   typeof update !== 'number' &&
   !!(update.paddingTop || update.paddingRight || update.paddingBottom || update.paddingLeft);

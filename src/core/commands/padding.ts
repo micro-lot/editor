@@ -1,7 +1,7 @@
 import {
   PaddingAttributes,
   PaddingUpdate,
-  isNotShorthand,
+  isNotPaddingShorthand,
   isPaddingShorthand,
   isPaddingXYShorthand,
 } from '@/core/types';
@@ -60,7 +60,7 @@ export const setPadding =
         paddingRight: 0,
         paddingBottom: 0,
         paddingLeft: 0,
-        ...(isNotShorthand(update) ? update : {}),
+        ...(isNotPaddingShorthand(update) ? update : {}),
       };
 
       if (typeof update === 'number') {
