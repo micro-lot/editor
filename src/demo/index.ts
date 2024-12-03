@@ -64,7 +64,8 @@ const editorView: EditorView = new EditorView(document.getElementById('editor'),
     jsonResult.innerHTML = JSON.stringify(newState.doc.toJSON(), null, 2);
 
     if (tr.selectionSet) {
-      console.log(newState.selection);
+      const { selection, doc } = newState;
+      console.log('selection node?: ', doc.nodeAt(selection.from)?.type.name);
     }
   },
 });
