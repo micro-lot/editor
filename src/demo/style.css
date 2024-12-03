@@ -20,3 +20,9 @@ pre {
   border: 1px solid lightslategray;
   text-align: left;
 }
+
+.editor-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

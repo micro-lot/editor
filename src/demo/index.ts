@@ -1,7 +1,11 @@
-import { gapCursorPlugins, historyPlugins, keyMapPlugins, setPadding } from '@/core';
+import { gapCursorPlugins, historyPlugins, keyMapPlugins, setMargin, setPadding } from '@/core';
 import { docNode } from '@/doc';
+import { horizontalRuleNode } from '@/horizontal-rule';
+import { setHorizontalRuleColor } from '@/horizontal-rule/commands';
 import { layoutNode } from '@/layout';
 import { layoutPlugins } from '@/layout/plugins';
+import { lineNode } from '@/line';
+import { setLineProps } from '@/line/commands';
 import { paragraphNode } from '@/paragraph';
 import { paragraphPlugins } from '@/paragraph/plugins';
 import { textNode } from '@/text';
@@ -9,8 +13,6 @@ import { DOMSerializer, Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 
-import { lineNode } from '@/line';
-import { setLineProps } from '@/line/commands';
 import './editor.scss';
 import './style.css';
 
@@ -28,7 +30,7 @@ const microLotSchema: Schema = new Schema({
 });
 
 const sampleDoc: Node = microLotSchema.node('doc', null, [
-  microLotSchema.node('layout', { paddingTop: 10 }, [
+  microLotSchema.node('layout', { paddingTop: 10, marginBottom: 20 }, [
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph.')]),
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph2.')]),
   ]),
@@ -73,6 +75,9 @@ const editorView: EditorView = new EditorView(document.getElementById('editor'),
 console.log(editorView);
 
 const initEditorTools = () => {
+  const marginInput = document.getElementById('marginInput') as HTMLInputElement;
+  const setMarginButton = document.getElementById('setMargin') as HTMLButtonElement;
+
   const paddingInput = document.getElementById('paddingInput') as HTMLInputElement;
   const setPaddingButton = document.getElementById('setPadding') as HTMLButtonElement;
   const lineColor = document.getElementById('lineColor') as HTMLInputElement;
@@ -80,6 +85,17 @@ const initEditorTools = () => {
   const angleValue = document.getElementById('angleValue') as HTMLSpanElement;
   const lineLength = document.getElementById('lineLength') as HTMLInputElement;
   const lineThickness = document.getElementById('lineThickness') as HTMLInputElement;
+
+  setMarginButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    if (!marginInput.value) {
+      return;
+    }
+
+    const value = parseInt(marginInput.value);
+    setMargin(value)(editorView.state, editorView.dispatch);
+  });
 
   setPaddingButton.addEventListener('click', (event) => {
     event.preventDefault();
@@ -89,7 +105,6 @@ const initEditorTools = () => {
     }
 
     const value = parseInt(paddingInput.value);
-    //
     setPadding(value)(editorView.state, editorView.dispatch);
   });
 

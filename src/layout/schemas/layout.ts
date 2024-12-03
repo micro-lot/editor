@@ -22,6 +22,12 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
        * dom.attrs.type 아래에 값을 가지는 것과 같음
        */
       type: { default: LAYOUT_TYPE.FLEX },
+      // margin
+      marginTop: { default: 0 },
+      marginRight: { default: 0 },
+      marginBottom: { default: 0 },
+      marginLeft: { default: 0 },
+      // padding
       paddingTop: { default: 0 },
       paddingRight: { default: 0 },
       paddingBottom: { default: 0 },
@@ -29,6 +35,7 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
     },
     meta: {
       applicableStyles: {
+        margin: true,
         padding: true,
       },
     },
@@ -61,10 +68,16 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
           }
 
           return {
+            marginTop: parseInt(style.marginTop) || 0,
+            marginRight: parseInt(style.marginRight) || 0,
+            marginBottom: parseInt(style.marginBottom) || 0,
+            marginLeft: parseInt(style.marginLeft) || 0,
+
             paddingTop: parseInt(style.paddingTop) || 0,
             paddingRight: parseInt(style.paddingRight) || 0,
             paddingBottom: parseInt(style.paddingBottom) || 0,
             paddingLeft: parseInt(style.paddingLeft) || 0,
+
             type: type || LAYOUT_TYPE.FLEX,
             ...attrs,
           };
@@ -79,6 +92,11 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
       const layoutBaseClass = `${CLASS_NAME_BASE}-layout`;
       const classes = [layoutBaseClass];
       const style = Object.entries({
+        'margin-top': attrs.marginTop ? `${attrs.marginTop}px` : null,
+        'margin-right': attrs.marginRight ? `${attrs.marginRight}px` : null,
+        'margin-bottom': attrs.marginBottom ? `${attrs.marginBottom}px` : null,
+        'margin-left': attrs.marginLeft ? `${attrs.marginLeft}px` : null,
+
         'padding-top': attrs.paddingTop ? `${attrs.paddingTop}px` : null,
         'padding-right': attrs.paddingRight ? `${attrs.paddingRight}px` : null,
         'padding-bottom': attrs.paddingBottom ? `${attrs.paddingBottom}px` : null,
