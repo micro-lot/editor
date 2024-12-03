@@ -1,0 +1,11 @@
+@use '@/core/styles/variables' as *;
+
+.#{$base-class-name}-line {
+  display: inline-block;
+  height: var(--line-thickness);
+  width: var(--line-length);
+  background-color: var(--line-color);
+  transform: rotate(var(--line-angle));
+  transform-origin: center;
+  margin: 1em;
+}

@@ -9,8 +9,8 @@ import { DOMSerializer, Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 
-import { horizontalRuleNode } from '@/horizontal-rule';
-import { setHorizontalRuleColor } from '@/horizontal-rule/commands';
+import { lineNode } from '@/line';
+import { setLineProps } from '@/line/commands';
 import './editor.scss';
 import './style.css';
 
@@ -23,7 +23,7 @@ const microLotSchema: Schema = new Schema({
     ...textNode(),
     ...layoutNode(),
     ...paragraphNode(),
-    ...horizontalRuleNode(),
+    ...lineNode(),
   },
 });
 
@@ -32,7 +32,7 @@ const sampleDoc: Node = microLotSchema.node('doc', null, [
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph.')]),
     microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph2.')]),
   ]),
-  microLotSchema.node('horizontalRule', null),
+  microLotSchema.node('line', null),
   microLotSchema.node('layout', null),
 ]);
 
@@ -75,10 +75,11 @@ console.log(editorView);
 const initEditorTools = () => {
   const paddingInput = document.getElementById('paddingInput') as HTMLInputElement;
   const setPaddingButton = document.getElementById('setPadding') as HTMLButtonElement;
-  const colorInput = document.getElementById('horizontalRuleColorInput') as HTMLInputElement;
-  const horizontalRuleColorButton = document.getElementById(
-    'setHorizontalRuleColor',
-  ) as HTMLButtonElement;
+  const lineColor = document.getElementById('lineColor') as HTMLInputElement;
+  const lineAngle = document.getElementById('lineAngle') as HTMLInputElement;
+  const angleValue = document.getElementById('angleValue') as HTMLSpanElement;
+  const lineLength = document.getElementById('lineLength') as HTMLInputElement;
+  const lineThickness = document.getElementById('lineThickness') as HTMLInputElement;
 
   setPaddingButton.addEventListener('click', (event) => {
     event.preventDefault();
@@ -92,11 +93,34 @@ const initEditorTools = () => {
     setPadding(value)(editorView.state, editorView.dispatch);
   });
 
-  horizontalRuleColorButton.addEventListener('click', (event) => {
-    event.preventDefault();
+  // 선의 속성
+  // 각도 변경 시
+  lineAngle.addEventListener('input', () => {
+    angleValue.textContent = `${lineAngle.value}°`;
+    setLineProps({
+      angle: Number(lineAngle.value),
+    })(editorView.state, editorView.dispatch);
+  });
 
-    const color = colorInput.value;
-    setHorizontalRuleColor(color)(editorView.state, editorView.dispatch);
+  // 색상 변경 시
+  lineColor.addEventListener('change', () => {
+    setLineProps({
+      color: lineColor.value,
+    })(editorView.state, editorView.dispatch);
+  });
+
+  // 길이 변경 시
+  lineLength.addEventListener('input', () => {
+    setLineProps({
+      length: Number(lineLength.value),
+    })(editorView.state, editorView.dispatch);
+  });
+
+  // 두께 변경 시
+  lineThickness.addEventListener('input', () => {
+    setLineProps({
+      thickness: Number(lineThickness.value),
+    })(editorView.state, editorView.dispatch);
   });
 };
 
