@@ -14,7 +14,12 @@ export const getPaddingableNodes = (state: EditorState) => {
   const paddingableNodes: Array<{ node: Node; pos: number }> = [];
 
   doc.nodesBetween(selection.from, selection.to, (node, pos) => {
-    if (hasStyles(node.type, 'padding')) {
+    // 부모 노드는 배열에서 제외
+    const nodeFrom = pos;
+    const nodeTo = pos + node.nodeSize;
+    const isSelected = nodeFrom >= selection.from && nodeTo <= selection.to;
+
+    if (hasStyles(node.type, 'padding') && isSelected) {
       paddingableNodes.push({ node, pos });
     }
   });
