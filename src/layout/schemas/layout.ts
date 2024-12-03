@@ -15,6 +15,8 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
     group: CONTAINER_GROUP,
     content: zeroOrMore(BLOCK_GROUP),
     draggable: true,
+    selectable: true,
+    allowGapCursor: true,
     attrs: {
       /**
        * dom.attrs.type 아래에 값을 가지는 것과 같음

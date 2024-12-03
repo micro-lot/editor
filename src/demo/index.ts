@@ -1,4 +1,4 @@
-import { historyPlugins, keyMapPlugins, setPadding } from '@/core';
+import { gapCursorPlugins, historyPlugins, keyMapPlugins, setPadding } from '@/core';
 import { docNode } from '@/doc';
 import { layoutNode } from '@/layout';
 import { layoutPlugins } from '@/layout/plugins';
@@ -33,6 +33,7 @@ const sampleDoc: Node = microLotSchema.node('doc', null, [
 const samplePlugins: Plugin[] = [
   ...keyMapPlugins(),
   ...historyPlugins(),
+  ...gapCursorPlugins(),
   ...layoutPlugins({
     layoutNodeType: microLotSchema.nodes.layout,
     defaultContentNodeType: microLotSchema.nodes.paragraph,
