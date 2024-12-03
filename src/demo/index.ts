@@ -1,7 +1,5 @@
 import { gapCursorPlugins, historyPlugins, keyMapPlugins, setMargin, setPadding } from '@/core';
 import { docNode } from '@/doc';
-import { horizontalRuleNode } from '@/horizontal-rule';
-import { setHorizontalRuleColor } from '@/horizontal-rule/commands';
 import { layoutNode } from '@/layout';
 import { layoutPlugins } from '@/layout/plugins';
 import { lineNode } from '@/line';
