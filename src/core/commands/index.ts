@@ -1,3 +1,4 @@
 export * from './create-node';
-export * from './padding';
+export * from './dimension';
 export * from './margin';
+export * from './padding';

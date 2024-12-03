@@ -1,7 +1,6 @@
 export interface StyleableNodeMeta {
   applicableStyles: {
-    width?: boolean;
-    height?: boolean;
+    dimension?: boolean;
     margin?: boolean;
     border?: boolean;
     padding?: boolean;

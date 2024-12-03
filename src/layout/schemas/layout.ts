@@ -1,4 +1,10 @@
-import { BLOCK_GROUP, CLASS_NAME_BASE, CONTAINER_GROUP } from '@/core';
+import {
+  BLOCK_GROUP,
+  CLASS_NAME_BASE,
+  CONTAINER_GROUP,
+  resolveDimensionValueToAttr,
+  resolveDimensionValueToStyle,
+} from '@/core';
 import {
   ALIGN_ITEMS,
   FLEX_DIRECTION,
@@ -22,6 +28,9 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
        * dom.attrs.type 아래에 값을 가지는 것과 같음
        */
       type: { default: LAYOUT_TYPE.FLEX },
+      // dimension
+      width: { default: '100%' },
+      height: { default: 'auto' },
       // margin
       marginTop: { default: 0 },
       marginRight: { default: 0 },
@@ -35,6 +44,7 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
     },
     meta: {
       applicableStyles: {
+        dimension: true,
         margin: true,
         padding: true,
       },
@@ -68,6 +78,9 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
           }
 
           return {
+            width: resolveDimensionValueToAttr(style.width),
+            height: resolveDimensionValueToAttr(style.height),
+
             marginTop: parseInt(style.marginTop) || 0,
             marginRight: parseInt(style.marginRight) || 0,
             marginBottom: parseInt(style.marginBottom) || 0,
@@ -92,6 +105,9 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
       const layoutBaseClass = `${CLASS_NAME_BASE}-layout`;
       const classes = [layoutBaseClass];
       const style = Object.entries({
+        width: attrs.width ? resolveDimensionValueToStyle(attrs.width) : null,
+        height: attrs.height ? resolveDimensionValueToStyle(attrs.height) : null,
+
         'margin-top': attrs.marginTop ? `${attrs.marginTop}px` : null,
         'margin-right': attrs.marginRight ? `${attrs.marginRight}px` : null,
         'margin-bottom': attrs.marginBottom ? `${attrs.marginBottom}px` : null,

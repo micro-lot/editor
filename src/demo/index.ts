@@ -1,4 +1,11 @@
-import { gapCursorPlugins, historyPlugins, keyMapPlugins, setMargin, setPadding } from '@/core';
+import {
+  gapCursorPlugins,
+  historyPlugins,
+  keyMapPlugins,
+  setDimension,
+  setMargin,
+  setPadding,
+} from '@/core';
 import { docNode } from '@/doc';
 import { layoutNode } from '@/layout';
 import { layoutPlugins } from '@/layout/plugins';
@@ -73,6 +80,10 @@ const editorView: EditorView = new EditorView(document.getElementById('editor'),
 console.log(editorView);
 
 const initEditorTools = () => {
+  const widthInput = document.getElementById('widthInput') as HTMLInputElement;
+  const heightInput = document.getElementById('heightInput') as HTMLInputElement;
+  const setDimensionButton = document.getElementById('setDimension') as HTMLButtonElement;
+
   const marginInput = document.getElementById('marginInput') as HTMLInputElement;
   const setMarginButton = document.getElementById('setMargin') as HTMLButtonElement;
 
@@ -83,6 +94,19 @@ const initEditorTools = () => {
   const angleValue = document.getElementById('angleValue') as HTMLSpanElement;
   const lineLength = document.getElementById('lineLength') as HTMLInputElement;
   const lineThickness = document.getElementById('lineThickness') as HTMLInputElement;
+
+  setDimensionButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    if (!widthInput.value && heightInput.value) {
+      return;
+    }
+
+    setDimension({
+      width: Number.parseInt(widthInput.value) || '',
+      height: Number.parseInt(heightInput.value) || '',
+    })(editorView.state, editorView.dispatch);
+  });
 
   setMarginButton.addEventListener('click', (event) => {
     event.preventDefault();
