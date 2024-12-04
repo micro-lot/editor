@@ -1,4 +1,4 @@
-import { BLOCK_GROUP, CLASS_NAME_BASE } from '@/core';
+import { BLOCK_GROUP, CLASS_NAME_BASE } from '@/core/constants';
 import { NodeSpec } from 'prosemirror-model';
 
 export interface LineAttributes {

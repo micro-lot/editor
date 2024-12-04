@@ -1,4 +1,4 @@
-import { BLOCK_GROUP, CONTAINER_GROUP } from '@/core';
+import { BLOCK_GROUP, CONTAINER_GROUP } from '@/core/constants';
 import { NodeSpec } from 'prosemirror-model';
 
 export const docNode = (): Record<string, NodeSpec> => {

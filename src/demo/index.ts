@@ -1,12 +1,5 @@
-import {
-  gapCursorPlugins,
-  historyPlugins,
-  keyMapPlugins,
-  setBorder,
-  setDimension,
-  setMargin,
-  setPadding,
-} from '@/core';
+import { setBorder, setDimension, setMargin, setPadding } from '@/core/commands';
+import { gapCursorPlugins, historyPlugins, keyMapPlugins } from '@/core/plugins';
 import { docNode } from '@/doc';
 import { layoutNode } from '@/layout';
 import { layoutPlugins } from '@/layout/plugins';
@@ -18,7 +11,6 @@ import { textNode } from '@/text';
 import { DOMSerializer, Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-
 import './editor.scss';
 import './style.css';
 

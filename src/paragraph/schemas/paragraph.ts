@@ -1,4 +1,5 @@
-import { AlignableAttrs, BLOCK_GROUP, CLASS_NAME_BASE, INLINE_GROUP, TEXT_ALIGNMENT } from '@/core';
+import { BLOCK_GROUP, CLASS_NAME_BASE, INLINE_GROUP } from '@/core/constants';
+import { AlignableAttrs, TEXT_ALIGNMENT } from '@/core/types';
 import { zeroOrMore } from '@/utilities';
 import { NodeSpec } from 'prosemirror-model';
 

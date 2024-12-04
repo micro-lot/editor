@@ -9,7 +9,7 @@ import {
   MarginedNodeSpec,
   PaddedNodeSpec,
   PaddingAttributes,
-} from '@/core';
+} from '@/core/types';
 import { NodeSpec } from 'prosemirror-model';
 
 export type LayoutType = (typeof LAYOUT_TYPE)[keyof typeof LAYOUT_TYPE];

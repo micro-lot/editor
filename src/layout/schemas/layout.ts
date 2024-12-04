@@ -1,10 +1,5 @@
-import {
-  BLOCK_GROUP,
-  CLASS_NAME_BASE,
-  CONTAINER_GROUP,
-  resolveDimensionValueToAttr,
-  resolveDimensionValueToStyle,
-} from '@/core';
+import { BLOCK_GROUP, CLASS_NAME_BASE, CONTAINER_GROUP } from '@/core/constants';
+import { resolveDimensionValueToAttr, resolveDimensionValueToStyle } from '@/core/utilities';
 import {
   ALIGN_ITEMS,
   FLEX_DIRECTION,

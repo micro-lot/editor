@@ -1,4 +1,4 @@
-import { createNode } from '@/core';
+import { createNode } from '@/core/commands';
 import { NodeType } from 'prosemirror-model';
 import { NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
 
