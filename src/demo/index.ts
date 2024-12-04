@@ -1,6 +1,9 @@
 import { setBorder, setDimension, setMargin, setPadding } from '@/core/commands';
 import { corePlugins } from '@/core/plugins';
 import { docNode } from '@/doc/schemas';
+import { insertImage } from '@/image/commands';
+import { imageResizablePlugin } from '@/image/plugins';
+import { imageNode } from '@/image/schemas';
 import { layoutPlugins } from '@/layout/plugins';
 import { layoutNode } from '@/layout/schemas';
 import { setLineProps } from '@/line/commands';
@@ -24,6 +27,7 @@ const microLotSchema: Schema = new Schema({
     ...layoutNode(),
     ...paragraphNode(),
     ...lineNode(),
+    ...imageNode(),
   },
 });
 
@@ -43,6 +47,7 @@ const samplePlugins: Plugin[] = [
     defaultContentNodeType: microLotSchema.nodes.paragraph,
   }),
   ...paragraphPlugins({ nodeType: microLotSchema.nodes.paragraph }),
+  imageResizablePlugin(),
 ];
 const state: EditorState = EditorState.create({
   schema: microLotSchema,
@@ -176,6 +181,20 @@ const initEditorTools = () => {
     setLineProps({
       thickness: Number(lineThickness.value),
     })(editorView.state, editorView.dispatch);
+  });
+
+  // 이미지 삽입
+  const imageInput = document.getElementById('imageInput') as HTMLInputElement;
+  const insertImageButton = document.getElementById('insertImage') as HTMLButtonElement;
+
+  insertImageButton?.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const file = imageInput.files?.[0];
+    if (file) {
+      insertImage(file)(editorView.state, editorView.dispatch);
+      imageInput.value = '';
+    }
   });
 };
 

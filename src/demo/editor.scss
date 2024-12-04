@@ -8,6 +8,8 @@
 
 @use '@/line/styles/common.scss' as *;
 
+@use '@/image/styles/common.scss' as *;
+
 #editor {
   border: 1px solid #eaeaea;
   border-radius: 1rem;

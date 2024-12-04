@@ -1,0 +1,32 @@
+@use '@/core/styles/variables' as *;
+
+.#{$base-class-name}-image-wrapper {
+  display: inline-block;
+  position: relative;
+
+  &.ProseMirror-selectednode {
+    &::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      width: 12px;
+      height: 12px;
+      background-color: #22446c;
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: se-resize;
+      z-index: 10;
+    }
+  }
+}
+
+.#{$base-class-name}-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  &:not([data-width]) {
+    max-width: 300px;
+  }
+}
