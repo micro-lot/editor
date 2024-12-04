@@ -1,5 +1,18 @@
 import { BLOCK_GROUP, CLASS_NAME_BASE, CONTAINER_GROUP } from '@/core/constants';
-import { resolveDimensionValueToAttr, resolveDimensionValueToStyle } from '@/core/utilities';
+import {
+  borderToDOMStyle,
+  defaultBorderAttrs,
+  defaultDimensionAttrs,
+  defaultMarginAttrs,
+  defaultPaddingAttrs,
+  dimensionToDOMStyle,
+  marginToDOMStyle,
+  paddingToDOMStyle,
+  parseBorderFromDOMStyle,
+  parseDimensionFromDOMStyle,
+  parseMarginFromDOMStyle,
+  parsePaddingFromDOMStyle,
+} from '@/core/utilities';
 import {
   ALIGN_ITEMS,
   FLEX_DIRECTION,
@@ -23,24 +36,10 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
        * dom.attrs.type 아래에 값을 가지는 것과 같음
        */
       type: { default: LAYOUT_TYPE.FLEX },
-      // dimension
-      width: { default: '100%' },
-      height: { default: 'auto' },
-      // margin
-      marginTop: { default: 0 },
-      marginRight: { default: 0 },
-      marginBottom: { default: 0 },
-      marginLeft: { default: 0 },
-      // padding
-      paddingTop: { default: 0 },
-      paddingRight: { default: 0 },
-      paddingBottom: { default: 0 },
-      paddingLeft: { default: 0 },
-      //border
-      borderWidth: { default: '' },
-      borderStyle: { default: '' },
-      borderColor: { default: '' },
-      borderRadius: { default: '' },
+      ...defaultDimensionAttrs(),
+      ...defaultMarginAttrs(),
+      ...defaultPaddingAttrs(),
+      ...defaultBorderAttrs(),
     },
     meta: {
       applicableStyles: {
@@ -79,24 +78,10 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
           }
 
           return {
-            width: resolveDimensionValueToAttr(style.width),
-            height: resolveDimensionValueToAttr(style.height),
-
-            marginTop: parseInt(style.marginTop) || 0,
-            marginRight: parseInt(style.marginRight) || 0,
-            marginBottom: parseInt(style.marginBottom) || 0,
-            marginLeft: parseInt(style.marginLeft) || 0,
-
-            paddingTop: parseInt(style.paddingTop) || 0,
-            paddingRight: parseInt(style.paddingRight) || 0,
-            paddingBottom: parseInt(style.paddingBottom) || 0,
-            paddingLeft: parseInt(style.paddingLeft) || 0,
-
-            borderWidth: style.borderWidth,
-            borderStyle: style.borderStyle,
-            borderColor: style.borderColor,
-            borderRadius: style.borderRadius,
-
+            ...parseDimensionFromDOMStyle(style),
+            ...parseMarginFromDOMStyle(style),
+            ...parsePaddingFromDOMStyle(style),
+            ...parseBorderFromDOMStyle(style),
             type: type || LAYOUT_TYPE.FLEX,
             ...attrs,
           };
@@ -111,23 +96,10 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
       const layoutBaseClass = `${CLASS_NAME_BASE}-layout`;
       const classes = [layoutBaseClass];
       const style = Object.entries({
-        width: attrs.width ? resolveDimensionValueToStyle(attrs.width) : null,
-        height: attrs.height ? resolveDimensionValueToStyle(attrs.height) : null,
-
-        'margin-top': attrs.marginTop ? `${attrs.marginTop}px` : null,
-        'margin-right': attrs.marginRight ? `${attrs.marginRight}px` : null,
-        'margin-bottom': attrs.marginBottom ? `${attrs.marginBottom}px` : null,
-        'margin-left': attrs.marginLeft ? `${attrs.marginLeft}px` : null,
-
-        'padding-top': attrs.paddingTop ? `${attrs.paddingTop}px` : null,
-        'padding-right': attrs.paddingRight ? `${attrs.paddingRight}px` : null,
-        'padding-bottom': attrs.paddingBottom ? `${attrs.paddingBottom}px` : null,
-        'padding-left': attrs.paddingLeft ? `${attrs.paddingLeft}px` : null,
-
-        'border-width': attrs.borderWidth ? attrs.borderWidth : null,
-        'border-style': attrs.borderStyle ? attrs.borderStyle : null,
-        'border-color': attrs.borderColor ? attrs.borderColor : null,
-        'border-radius': attrs.borderRadius ? attrs.borderRadius : null,
+        ...dimensionToDOMStyle(attrs),
+        ...marginToDOMStyle(attrs),
+        ...paddingToDOMStyle(attrs),
+        ...borderToDOMStyle(attrs),
       })
         .filter(([_, value]) => value)
         .map((style) => style.join(':'))
