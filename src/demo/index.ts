@@ -1,13 +1,13 @@
 import { setBorder, setDimension, setMargin, setPadding } from '@/core/commands';
 import { gapCursorPlugins, historyPlugins, keyMapPlugins } from '@/core/plugins';
-import { docNode } from '@/doc';
-import { layoutNode } from '@/layout';
+import { docNode } from '@/doc/schemas';
 import { layoutPlugins } from '@/layout/plugins';
-import { lineNode } from '@/line';
+import { layoutNode } from '@/layout/schemas';
 import { setLineProps } from '@/line/commands';
-import { paragraphNode } from '@/paragraph';
+import { lineNode } from '@/line/schemas';
 import { paragraphPlugins } from '@/paragraph/plugins';
-import { textNode } from '@/text';
+import { paragraphNode } from '@/paragraph/schemas';
+import { textNode } from '@/text/schemas';
 import { DOMSerializer, Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
