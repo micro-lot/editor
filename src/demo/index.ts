@@ -1,5 +1,5 @@
 import { setBorder, setDimension, setMargin, setPadding } from '@/core/commands';
-import { gapCursorPlugins, historyPlugins, keyMapPlugins } from '@/core/plugins';
+import { corePlugins } from '@/core/plugins';
 import { docNode } from '@/doc/schemas';
 import { layoutPlugins } from '@/layout/plugins';
 import { layoutNode } from '@/layout/schemas';
@@ -37,9 +37,7 @@ const sampleDoc: Node = microLotSchema.node('doc', null, [
 ]);
 
 const samplePlugins: Plugin[] = [
-  ...keyMapPlugins(),
-  ...historyPlugins(),
-  ...gapCursorPlugins(),
+  ...corePlugins(),
   ...layoutPlugins({
     layoutNodeType: microLotSchema.nodes.layout,
     defaultContentNodeType: microLotSchema.nodes.paragraph,
