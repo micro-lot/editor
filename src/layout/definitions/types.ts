@@ -1,6 +1,8 @@
 import { ALIGN_ITEMS, FLEX_DIRECTION, LAYOUT_TYPE } from './constants';
 
 import {
+  BorderAttributes,
+  BorderedNodeSpec,
   DimensionAttributes,
   DimensionedNodeSpec,
   MarginAttributes,
@@ -28,7 +30,8 @@ export interface GridAttributes {
 export interface LayoutAttributesBase
   extends DimensionAttributes,
     MarginAttributes,
-    PaddingAttributes {
+    PaddingAttributes,
+    BorderAttributes {
   type: LayoutType;
 }
 
@@ -44,4 +47,8 @@ export const isGridTypeLayout = (
 ): layoutAttributes is LayoutAttributesBase & GridAttributes =>
   layoutAttributes.type === LAYOUT_TYPE.GRID;
 
-export type LayoutNodeSpec = NodeSpec & DimensionedNodeSpec & MarginedNodeSpec & PaddedNodeSpec;
+export type LayoutNodeSpec = NodeSpec &
+  DimensionedNodeSpec &
+  MarginedNodeSpec &
+  PaddedNodeSpec &
+  BorderedNodeSpec;

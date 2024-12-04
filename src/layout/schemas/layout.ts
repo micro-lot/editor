@@ -41,12 +41,18 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
       paddingRight: { default: 0 },
       paddingBottom: { default: 0 },
       paddingLeft: { default: 0 },
+      //border
+      borderWidth: { default: '' },
+      borderStyle: { default: '' },
+      borderColor: { default: '' },
+      borderRadius: { default: '' },
     },
     meta: {
       applicableStyles: {
         dimension: true,
         margin: true,
         padding: true,
+        border: true,
       },
     },
     /**
@@ -91,6 +97,11 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
             paddingBottom: parseInt(style.paddingBottom) || 0,
             paddingLeft: parseInt(style.paddingLeft) || 0,
 
+            borderWidth: style.borderWidth,
+            borderStyle: style.borderStyle,
+            borderColor: style.borderColor,
+            borderRadius: style.borderRadius,
+
             type: type || LAYOUT_TYPE.FLEX,
             ...attrs,
           };
@@ -117,6 +128,11 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
         'padding-right': attrs.paddingRight ? `${attrs.paddingRight}px` : null,
         'padding-bottom': attrs.paddingBottom ? `${attrs.paddingBottom}px` : null,
         'padding-left': attrs.paddingLeft ? `${attrs.paddingLeft}px` : null,
+
+        'border-width': attrs.borderWidth ? attrs.borderWidth : null,
+        'border-style': attrs.borderStyle ? attrs.borderStyle : null,
+        'border-color': attrs.borderColor ? attrs.borderColor : null,
+        'border-radius': attrs.borderRadius ? attrs.borderRadius : null,
       })
         .filter(([_, value]) => value)
         .map((style) => style.join(':'))

@@ -1,3 +1,4 @@
+export * from './border';
 export * from './create-node';
 export * from './dimension';
 export * from './margin';

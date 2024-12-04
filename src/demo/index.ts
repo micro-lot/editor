@@ -2,6 +2,7 @@ import {
   gapCursorPlugins,
   historyPlugins,
   keyMapPlugins,
+  setBorder,
   setDimension,
   setMargin,
   setPadding,
@@ -89,6 +90,13 @@ const initEditorTools = () => {
 
   const paddingInput = document.getElementById('paddingInput') as HTMLInputElement;
   const setPaddingButton = document.getElementById('setPadding') as HTMLButtonElement;
+
+  const borderWidthInput = document.getElementById('borderWidth') as HTMLInputElement;
+  const borderStyleInput = document.getElementById('borderStyle') as HTMLInputElement;
+  const borderColorInput = document.getElementById('borderColor') as HTMLInputElement;
+  const borderRadiusInput = document.getElementById('borderRadius') as HTMLInputElement;
+  const setBorderButton = document.getElementById('setBorder') as HTMLButtonElement;
+
   const lineColor = document.getElementById('lineColor') as HTMLInputElement;
   const lineAngle = document.getElementById('lineAngle') as HTMLInputElement;
   const angleValue = document.getElementById('angleValue') as HTMLSpanElement;
@@ -128,6 +136,26 @@ const initEditorTools = () => {
 
     const value = parseInt(paddingInput.value);
     setPadding(value)(editorView.state, editorView.dispatch);
+  });
+
+  setBorderButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    if (
+      !borderWidthInput.value &&
+      !borderStyleInput.value &&
+      !borderColorInput.value &&
+      !borderRadiusInput.value
+    ) {
+      return;
+    }
+
+    setBorder({
+      borderWidth: borderWidthInput.value || '',
+      borderStyle: borderStyleInput.value || '',
+      borderColor: borderColorInput.value || '',
+      borderRadius: borderRadiusInput.value || '',
+    })(editorView.state, editorView.dispatch);
   });
 
   // 선의 속성
