@@ -16,11 +16,13 @@ import {
 import {
   ALIGN_ITEMS,
   FLEX_DIRECTION,
+  FlexAlignItems,
+  FlexDirection,
+  FlexJustifyContent,
   JUSTIFY_CONTENT,
   LAYOUT_TYPE,
   LayoutAttributes,
   LayoutNodeSpec,
-  isFlexTypeLayout,
 } from '@/layout/definitions';
 import { zeroOrMore } from '@/utilities';
 
@@ -36,6 +38,10 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
        * dom.attrs.type 아래에 값을 가지는 것과 같음
        */
       type: { default: LAYOUT_TYPE.FLEX },
+      direction: { default: FLEX_DIRECTION.ROW },
+      alignItems: { default: ALIGN_ITEMS.STRETCH },
+      justifyContent: { default: JUSTIFY_CONTENT.START },
+      gap: { default: '' },
       ...defaultDimensionAttrs(),
       ...defaultMarginAttrs(),
       ...defaultPaddingAttrs(),
@@ -59,12 +65,12 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
           const dom = node;
           const type = dom.getAttribute('data-type');
           const style = dom.style;
-          let attrs = {};
+          let attrs: Partial<LayoutAttributes> = {};
 
           if (type === LAYOUT_TYPE.FLEX) {
-            const direction = dom.getAttribute('data-direction');
-            const justifyContent = dom.getAttribute('data-justify-content');
-            const alignItems = dom.getAttribute('data-align-items');
+            const direction = dom.getAttribute('data-direction') as FlexDirection;
+            const justifyContent = dom.getAttribute('data-justify-content') as FlexJustifyContent;
+            const alignItems = dom.getAttribute('data-align-items') as FlexAlignItems;
 
             attrs = {
               direction: direction || FLEX_DIRECTION.ROW,
@@ -93,6 +99,7 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
      */
     toDOM: (node) => {
       const attrs = node.attrs as LayoutAttributes;
+
       const layoutBaseClass = `${CLASS_NAME_BASE}-layout`;
       const classes = [layoutBaseClass];
       const style = Object.entries({
@@ -110,12 +117,16 @@ export const layoutNode = (): Record<string, LayoutNodeSpec> => {
         classes.push(`${layoutBaseClass}-${type}`);
       }
 
-      if (isFlexTypeLayout(attrs) && attrs.direction) {
+      if (attrs.direction) {
         classes.push(`${layoutBaseClass}-${attrs.direction}`);
       }
 
-      if (isFlexTypeLayout(attrs) && attrs.alignItems) {
-        classes.push(`${layoutBaseClass}-${attrs.alignItems}`);
+      if (attrs.alignItems) {
+        classes.push(`${layoutBaseClass}-items-${attrs.alignItems}`);
+      }
+
+      if (attrs.justifyContent) {
+        classes.push(`${layoutBaseClass}-justify-${attrs.justifyContent}`);
       }
 
       return [

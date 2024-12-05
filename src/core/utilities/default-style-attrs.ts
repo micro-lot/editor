@@ -29,18 +29,18 @@ export const defaultMarginAttrs = (): MarginedNodeSpec['attrs'] => ({
   },
 });
 
-export const defaultPaddingAttrs = (): PaddedNodeSpec['attrs'] => ({
+export const defaultPaddingAttrs = (defaultPadding?: number): PaddedNodeSpec['attrs'] => ({
   paddingTop: {
-    default: 0,
+    default: defaultPadding || 0,
   },
   paddingRight: {
-    default: 0,
+    default: defaultPadding || 0,
   },
   paddingBottom: {
-    default: 0,
+    default: defaultPadding || 0,
   },
   paddingLeft: {
-    default: 0,
+    default: defaultPadding || 0,
   },
 });
 

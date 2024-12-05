@@ -1,4 +1,4 @@
-import { ALIGN_ITEMS, FLEX_DIRECTION, LAYOUT_TYPE } from './constants';
+import { ALIGN_ITEMS, FLEX_DIRECTION, JUSTIFY_CONTENT, LAYOUT_TYPE } from './constants';
 
 import {
   BorderAttributes,
@@ -16,38 +16,49 @@ export type LayoutType = (typeof LAYOUT_TYPE)[keyof typeof LAYOUT_TYPE];
 
 export type FlexDirection = (typeof FLEX_DIRECTION)[keyof typeof FLEX_DIRECTION];
 
-export type FlexAlignItems = (typeof ALIGN_ITEMS)[keyof typeof ALIGN_ITEMS];
+export type FlexJustifyContent = (typeof JUSTIFY_CONTENT)[keyof typeof JUSTIFY_CONTENT];
 
-export interface FlexAttributes {
-  direction: FlexDirection;
-  alignItems: FlexAlignItems;
-}
+export type FlexAlignItems = (typeof ALIGN_ITEMS)[keyof typeof ALIGN_ITEMS];
 
 export interface GridAttributes {
   some: string;
 }
 
-export interface LayoutAttributesBase
+export interface LayoutAttributes
   extends DimensionAttributes,
     MarginAttributes,
     PaddingAttributes,
     BorderAttributes {
   type: LayoutType;
+  applied: boolean;
+  direction: FlexDirection;
+  alignItems: FlexAlignItems;
+  justifyContent: FlexJustifyContent;
+  gap: string;
 }
 
-export type LayoutAttributes = LayoutAttributesBase & (FlexAttributes | GridAttributes);
-
-export const isFlexTypeLayout = (
-  layoutAttributes: LayoutAttributes,
-): layoutAttributes is LayoutAttributesBase & FlexAttributes =>
-  layoutAttributes.type === LAYOUT_TYPE.FLEX;
-
-export const isGridTypeLayout = (
-  layoutAttributes: LayoutAttributes,
-): layoutAttributes is LayoutAttributesBase & GridAttributes =>
-  layoutAttributes.type === LAYOUT_TYPE.GRID;
+export interface LayoutNodeSpecBase {
+  attrs: {
+    type: {
+      default: LayoutType;
+    };
+    direction: {
+      default: FlexDirection;
+    };
+    alignItems: {
+      default: FlexAlignItems;
+    };
+    justifyContent: {
+      default: FlexJustifyContent;
+    };
+    gap: {
+      default: string;
+    };
+  };
+}
 
 export type LayoutNodeSpec = NodeSpec &
+  LayoutNodeSpecBase &
   DimensionedNodeSpec &
   MarginedNodeSpec &
   PaddedNodeSpec &

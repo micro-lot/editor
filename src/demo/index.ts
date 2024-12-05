@@ -32,10 +32,14 @@ const microLotSchema: Schema = new Schema({
 });
 
 const sampleDoc: Node = microLotSchema.node('doc', null, [
-  microLotSchema.node('layout', { paddingTop: 10, marginBottom: 20 }, [
-    microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph.')]),
-    microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph2.')]),
-  ]),
+  microLotSchema.node(
+    'layout',
+    { paddingTop: 10, marginBottom: 20, justifyContent: 'space-between' },
+    [
+      microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph.')]),
+      microLotSchema.node('paragraph', null, [microLotSchema.text('This is a sample paragraph2.')]),
+    ],
+  ),
   microLotSchema.node('line', null),
   microLotSchema.node('layout', null),
 ]);

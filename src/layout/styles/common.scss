@@ -3,6 +3,7 @@
 .micro-lot-layout {
   width: auto;
   min-height: 1rem;
+  box-sizing: border-box;
 
   &-flex {
     display: flex;
@@ -24,13 +25,13 @@
   }
 
   @each $justify-content in $justify-contents {
-    &-#{$justify-content} {
+    &-justify-#{$justify-content} {
       justify-content: $justify-content;
     }
   }
 
   @each $align-item in $align-items {
-    &-#{$align-item} {
+    &-items-#{$align-item} {
       align-items: $align-item;
     }
   }
