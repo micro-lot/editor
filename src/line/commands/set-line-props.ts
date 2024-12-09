@@ -21,12 +21,10 @@ export const setLineProps = (props: LineProps): Command => {
 
     if (linePos === -1) return false;
 
+    console.log('setLineProps', props);
     if (dispatch) {
       const node = state.doc.nodeAt(linePos);
-      // 5도 단위로 각도 조정
-      if (props.angle !== undefined) {
-        props.angle = Math.round(props.angle / 5) * 5;
-      }
+
       const tr = state.tr.setNodeMarkup(linePos, null, {
         ...node?.attrs,
         ...props,

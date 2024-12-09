@@ -1,5 +1,20 @@
 @use '@/core/styles/variables' as *;
 
+.#{$base-class-name}-line-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 1em;
+
+  // 라인이 선택되었을 때만 핸들 표시
+  &:not(.ProseMirror-selectednode) {
+    .#{$base-class-name}-line-rotate-handle,
+    .#{$base-class-name}-line-resize-handle-left,
+    .#{$base-class-name}-line-resize-handle-right {
+      display: none;
+    }
+  }
+}
+
 .#{$base-class-name}-line {
   display: inline-block;
   height: var(--line-thickness);
@@ -7,5 +22,57 @@
   background-color: var(--line-color);
   transform: rotate(var(--line-angle));
   transform-origin: center;
-  margin: 1em;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+  }
+}
+
+// 회전 핸들
+.#{$base-class-name}-line-rotate-handle {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: #4c9ffe;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: grab;
+  z-index: 2;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// 리사이즈 핸들
+.#{$base-class-name}-line-resize-handle {
+  &-left,
+  &-right {
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: #4c9ffe;
+    border: 2px solid white;
+    border-radius: 2px;
+    transform: translateY(-50%);
+    cursor: ew-resize;
+    z-index: 2;
+  }
+
+  &-left {
+    left: -4px;
+  }
+
+  &-right {
+    right: -4px;
+  }
 }

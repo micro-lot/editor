@@ -13,7 +13,7 @@ export const lineNode = (): Record<string, NodeSpec> => {
     group: BLOCK_GROUP,
     draggable: true,
     attrs: {
-      color: { default: null },
+      color: { default: '#000' },
       angle: { default: 0 }, // 기본값 0도 (가로)
       length: { default: 100 }, // 기본값 100px
       thickness: { default: 1 }, // 기본값 1px
@@ -24,7 +24,7 @@ export const lineNode = (): Record<string, NodeSpec> => {
         getAttrs: (node) => {
           const dom = node as HTMLElement;
           return {
-            color: dom.getAttribute('data-color') || null,
+            color: dom.getAttribute('data-color') || '#000',
             angle: Number(dom.getAttribute('data-angle')) || 0,
             length: Number(dom.getAttribute('data-length')) || 100,
             thickness: Number(dom.getAttribute('data-thickness')) || 1,
@@ -37,19 +37,40 @@ export const lineNode = (): Record<string, NodeSpec> => {
       return [
         'div',
         {
-          class: `${CLASS_NAME_BASE}-line`,
-          'data-color': attrs.color || null,
-          'data-angle': attrs.angle,
-          'data-length': attrs.length,
-          'data-thickness': attrs.thickness,
-          style: `
-          --line-color: ${attrs.color || '#000'};
-          --line-angle: ${attrs.angle}deg;
-          --line-length: ${attrs.length}px;
-          --line-thickness: ${attrs.thickness}px;
-        `,
+          class: `${CLASS_NAME_BASE}-line-wrapper`,
         },
+        [
+          'div',
+          {
+            class: `${CLASS_NAME_BASE}-line`,
+            style: `
+            --line-thickness: ${attrs.thickness}px;
+            --line-length: ${attrs.length}px;
+            --line-color: ${attrs.color};
+            --line-angle: ${attrs.angle}deg;
+          `,
+          },
+          ['div', { class: `${CLASS_NAME_BASE}-line-rotate-handle` }],
+          ['div', { class: `${CLASS_NAME_BASE}-line-resize-handle-left` }],
+          ['div', { class: `${CLASS_NAME_BASE}-line-resize-handle-right` }],
+        ],
       ];
+      // return [
+      //   'div',
+      //   {
+      //     class: `${CLASS_NAME_BASE}-line`,
+      //     'data-color': attrs.color || null,
+      //     'data-angle': attrs.angle,
+      //     'data-length': attrs.length,
+      //     'data-thickness': attrs.thickness,
+      //     style: `
+      //     --line-color: ${attrs.color || '#000'};
+      //     --line-angle: ${attrs.angle}deg;
+      //     --line-length: ${attrs.length}px;
+      //     --line-thickness: ${attrs.thickness}px;
+      //   `,
+      //   },
+      // ];
     },
   };
 

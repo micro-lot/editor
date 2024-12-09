@@ -7,6 +7,7 @@ import { imageNode } from '@/image/schemas';
 import { layoutPlugins } from '@/layout/plugins';
 import { layoutNode } from '@/layout/schemas';
 import { setLineProps } from '@/line/commands';
+import { lineResizablePlugin, lineRotatablePlugin } from '@/line/plugins';
 import { lineNode } from '@/line/schemas';
 import { paragraphPlugins } from '@/paragraph/plugins';
 import { paragraphNode } from '@/paragraph/schemas';
@@ -52,6 +53,8 @@ const samplePlugins: Plugin[] = [
   }),
   ...paragraphPlugins({ nodeType: microLotSchema.nodes.paragraph }),
   imageResizablePlugin(),
+  lineRotatablePlugin(),
+  lineResizablePlugin(),
 ];
 const state: EditorState = EditorState.create({
   schema: microLotSchema,
@@ -104,7 +107,6 @@ const initEditorTools = () => {
   const lineColor = document.getElementById('lineColor') as HTMLInputElement;
   const lineAngle = document.getElementById('lineAngle') as HTMLInputElement;
   const angleValue = document.getElementById('angleValue') as HTMLSpanElement;
-  const lineLength = document.getElementById('lineLength') as HTMLInputElement;
   const lineThickness = document.getElementById('lineThickness') as HTMLInputElement;
 
   setDimensionButton.addEventListener('click', (event) => {
@@ -175,13 +177,6 @@ const initEditorTools = () => {
   lineColor.addEventListener('change', () => {
     setLineProps({
       color: lineColor.value,
-    })(editorView.state, editorView.dispatch);
-  });
-
-  // 길이 변경 시
-  lineLength.addEventListener('input', () => {
-    setLineProps({
-      length: Number(lineLength.value),
     })(editorView.state, editorView.dispatch);
   });
 
