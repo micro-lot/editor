@@ -72,7 +72,12 @@ const editorView: EditorView = new EditorView(document.getElementById('editor'),
 
     if (tr.selectionSet) {
       const { selection, doc } = newState;
-      console.log('selection node?: ', doc.nodeAt(selection.from)?.type.name);
+      console.log(
+        'selection node?: ',
+        doc.nodeAt(selection.from)?.type.name,
+        selection.from,
+        selection.to,
+      );
     }
   },
 });
