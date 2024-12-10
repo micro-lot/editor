@@ -40,8 +40,15 @@ export const hoverDecorationPlugins = (): Plugin[] => {
     }
 
     // 3. 그 외의 경우
+    const restNode = $pos.node($pos.depth);
+
+    if (restNode.type.name === 'doc') {
+      // 최상위 문서(doc)는 해당없음
+      return null;
+    }
+
     return {
-      node: $pos.node($pos.depth),
+      node: restNode,
       pos: $pos.before($pos.depth),
     };
   };
