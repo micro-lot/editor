@@ -9,7 +9,6 @@ export const paragraphNode = (): Record<string, NodeSpec> => {
   const nodeSpec: NodeSpec = {
     group: BLOCK_GROUP,
     content: zeroOrMore(INLINE_GROUP),
-    selectable: true,
     draggable: true,
     attrs: {
       align: { default: null },
