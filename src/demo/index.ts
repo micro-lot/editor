@@ -1,3 +1,5 @@
+import { boldPlugins } from '@/bold/plugins';
+import { boldMark } from '@/bold/schemas';
 import { setBorder, setDimension, setMargin, setPadding } from '@/core/commands';
 import { corePlugins } from '@/core/plugins';
 import { docNode } from '@/doc/schemas';
@@ -30,6 +32,9 @@ const microLotSchema: Schema = new Schema({
     ...lineNode(),
     ...imageNode(),
   },
+  marks: {
+    ...boldMark(),
+  },
 });
 
 const sampleDoc: Node = microLotSchema.node('doc', null, [
@@ -47,11 +52,20 @@ const sampleDoc: Node = microLotSchema.node('doc', null, [
 
 const samplePlugins: Plugin[] = [
   ...corePlugins(),
+
+  // node plugins
   ...layoutPlugins({
     layoutNodeType: microLotSchema.nodes.layout,
     defaultContentNodeType: microLotSchema.nodes.paragraph,
   }),
   ...paragraphPlugins({ nodeType: microLotSchema.nodes.paragraph }),
+
+  // mark plugins
+  ...boldPlugins({
+    markType: microLotSchema.marks.bold,
+  }),
+
+  // other plugins
   imageResizablePlugin(),
   lineRotatablePlugin(),
   lineResizablePlugin(),
