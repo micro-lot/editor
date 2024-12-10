@@ -6,6 +6,8 @@ import { docNode } from '@/doc/schemas';
 import { insertImage } from '@/image/commands';
 import { imageResizablePlugin } from '@/image/plugins';
 import { imageNode } from '@/image/schemas';
+import { italicPlugins } from '@/italic/plugins';
+import { italicMark } from '@/italic/schemas';
 import { layoutPlugins } from '@/layout/plugins';
 import { layoutNode } from '@/layout/schemas';
 import { setLineProps } from '@/line/commands';
@@ -34,6 +36,7 @@ const microLotSchema: Schema = new Schema({
   },
   marks: {
     ...boldMark(),
+    ...italicMark(),
   },
 });
 
@@ -63,6 +66,9 @@ const samplePlugins: Plugin[] = [
   // mark plugins
   ...boldPlugins({
     markType: microLotSchema.marks.bold,
+  }),
+  ...italicPlugins({
+    markType: microLotSchema.marks.italic,
   }),
 
   // other plugins

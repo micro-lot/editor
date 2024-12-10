@@ -1,4 +1,3 @@
-import { CLASS_NAME_BASE } from '@/core/constants';
 import { MarkSpec } from 'prosemirror-model';
 
 export const boldMark = (): Record<string, MarkSpec> => {
@@ -16,12 +15,7 @@ export const boldMark = (): Record<string, MarkSpec> => {
       },
     ],
     toDOM() {
-      return [
-        'strong',
-        {
-          class: `${CLASS_NAME_BASE}-bold`,
-        },
-      ];
+      return ['strong'];
     },
   };
 
