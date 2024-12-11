@@ -10,6 +10,8 @@
 
 @use '@/image/styles/common.scss' as *;
 
+@use '@/underline/styles/common.scss' as *;
+
 #editor {
   border: 1px solid #eaeaea;
   border-radius: 1rem;

@@ -1,0 +1,5 @@
+@use '@/core/styles/variables' as *;
+
+.#{$base-class-name}-underline {
+  text-decoration: underline;
+}

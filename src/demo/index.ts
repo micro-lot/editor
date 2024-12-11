@@ -18,6 +18,8 @@ import { paragraphNode } from '@/paragraph/schemas';
 import { strikethroughPlugins } from '@/strikethrough/plugins';
 import { strikethroughMark } from '@/strikethrough/schemas';
 import { textNode } from '@/text/schemas';
+import { underlinePlugins } from '@/underline/plugins';
+import { underlineMark } from '@/underline/schemas';
 import { DOMSerializer, Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -40,6 +42,7 @@ const microLotSchema: Schema = new Schema({
     ...boldMark(),
     ...italicMark(),
     ...strikethroughMark(),
+    ...underlineMark(),
   },
 });
 
@@ -75,6 +78,9 @@ const samplePlugins: Plugin[] = [
   }),
   ...strikethroughPlugins({
     markType: microLotSchema.marks.strikethrough,
+  }),
+  ...underlinePlugins({
+    markType: microLotSchema.marks.underline,
   }),
 
   // other plugins
