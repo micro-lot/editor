@@ -15,6 +15,8 @@ import { lineResizablePlugin, lineRotatablePlugin } from '@/line/plugins';
 import { lineNode } from '@/line/schemas';
 import { paragraphPlugins } from '@/paragraph/plugins';
 import { paragraphNode } from '@/paragraph/schemas';
+import { strikethroughPlugins } from '@/strikethrough/plugins';
+import { strikethroughMark } from '@/strikethrough/schemas';
 import { textNode } from '@/text/schemas';
 import { DOMSerializer, Node, Schema } from 'prosemirror-model';
 import { EditorState, Plugin } from 'prosemirror-state';
@@ -37,6 +39,7 @@ const microLotSchema: Schema = new Schema({
   marks: {
     ...boldMark(),
     ...italicMark(),
+    ...strikethroughMark(),
   },
 });
 
@@ -69,6 +72,9 @@ const samplePlugins: Plugin[] = [
   }),
   ...italicPlugins({
     markType: microLotSchema.marks.italic,
+  }),
+  ...strikethroughPlugins({
+    markType: microLotSchema.marks.strikethrough,
   }),
 
   // other plugins
