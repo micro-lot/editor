@@ -21,7 +21,6 @@ export const setLineProps = (props: LineProps): Command => {
 
     if (linePos === -1) return false;
 
-    console.log('setLineProps', props);
     if (dispatch) {
       const node = state.doc.nodeAt(linePos);
 

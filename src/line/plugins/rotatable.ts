@@ -3,7 +3,6 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { setLineProps } from '../commands/set-line-props';
 
-// @TODO: 클릭 안됨 수정
 export const lineRotatablePlugin = () =>
   new Plugin({
     key: new PluginKey('lineRotatable'),
@@ -13,11 +12,8 @@ export const lineRotatablePlugin = () =>
           const target = event.target as HTMLElement;
           const line = target.closest(`.${CLASS_NAME_BASE}-line`) as HTMLElement;
 
-          if (!line?.classList.contains('ProseMirror-selectednode')) {
-            return false;
-          }
+          if (!line) return false;
 
-          // 회전 핸들을 클릭했는지 확인
           const rect = line.getBoundingClientRect();
           const isRotateHandle = target.classList.contains(`${CLASS_NAME_BASE}-line-rotate-handle`);
 
@@ -50,7 +46,6 @@ export const lineRotatablePlugin = () =>
               }
             }
 
-            console.log('newAngle', newAngle);
             setLineProps({ angle: newAngle })(view.state, view.dispatch);
           };
 
