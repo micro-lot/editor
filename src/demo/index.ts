@@ -18,6 +18,8 @@ import { paragraphNode } from '@/paragraph/schemas';
 import { strikethroughPlugins } from '@/strikethrough/plugins';
 import { strikethroughMark } from '@/strikethrough/schemas';
 import { textNode } from '@/text/schemas';
+import { toggleTextColorCommand } from '@/text-color/commands';
+import { textColorMark } from '@/text-color/schemas';
 import { underlinePlugins } from '@/underline/plugins';
 import { underlineMark } from '@/underline/schemas';
 import { DOMSerializer, Node, Schema } from 'prosemirror-model';
@@ -43,6 +45,7 @@ const microLotSchema: Schema = new Schema({
     ...italicMark(),
     ...strikethroughMark(),
     ...underlineMark(),
+    ...textColorMark(),
   },
 });
 
@@ -141,6 +144,9 @@ const initEditorTools = () => {
   const angleValue = document.getElementById('angleValue') as HTMLSpanElement;
   const lineThickness = document.getElementById('lineThickness') as HTMLInputElement;
 
+  const textColor = document.getElementById('textColor') as HTMLInputElement;
+  const toggleColorButton = document.getElementById('toggleTextColor') as HTMLButtonElement;
+
   setDimensionButton.addEventListener('click', (event) => {
     event.preventDefault();
 
@@ -231,6 +237,16 @@ const initEditorTools = () => {
       insertImage(file)(editorView.state, editorView.dispatch);
       imageInput.value = '';
     }
+  });
+
+  toggleColorButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const value = textColor.value;
+    toggleTextColorCommand(microLotSchema.marks.textColor, { color: value })(
+      editorView.state,
+      editorView.dispatch,
+    );
   });
 };
 
