@@ -1,5 +1,5 @@
 import { CLASS_NAME_BASE } from '@/core/constants';
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 
 export const imageResizablePlugin = () =>
@@ -10,27 +10,48 @@ export const imageResizablePlugin = () =>
         mousedown(view: EditorView, event: MouseEvent) {
           const target = event.target as HTMLElement;
           const wrapper = target.closest(`.${CLASS_NAME_BASE}-image-wrapper`) as HTMLElement;
+          const isResizeHandle = target.classList.contains(
+            `${CLASS_NAME_BASE}-image-resize-handle-right-bottom`,
+          );
+          const img = wrapper?.querySelector(`.${CLASS_NAME_BASE}-image`) as HTMLImageElement;
 
-          if (!wrapper?.classList.contains('ProseMirror-selectednode')) {
+          if (!wrapper || !isResizeHandle || !img) {
             return false;
           }
 
-          const rect = wrapper.getBoundingClientRect();
-          const isHandle = event.clientX > rect.right - 12 && event.clientY > rect.bottom - 12;
+          // 노드 선택
+          const pos = view.posAtDOM(wrapper, 0);
+          if (pos === null) {
+            return false;
+          }
 
-          if (!isHandle) return false;
+          const tr = view.state.tr.setSelection(NodeSelection.create(view.state.doc, pos));
+          view.dispatch(tr);
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          // 드래그 시작 방지
+          // wrapper.addEventListener('dragstart', (e) => e.preventDefault());
 
           const startX = event.clientX;
-          const img = wrapper.querySelector(`.${CLASS_NAME_BASE}-image`) as HTMLImageElement;
+          const startY = event.clientY;
           const startWidth = img.offsetWidth;
-
-          const initialPos = view.posAtDOM(wrapper, 0);
-          if (initialPos === -1) return false;
+          const startHeight = img.offsetHeight;
 
           const onMouseMove = (e: MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+
             const currentX = e.clientX;
-            const diff = currentX - startX;
-            const newWidth = Math.max(50, startWidth + diff); // @TODO: 최소 50px로 일단 정함
+            const currentY = e.clientY;
+            const diffX = currentX - startX;
+            const diffY = currentY - startY;
+
+            // 비율 유지를 위한 계산
+            const ratio = startHeight / startWidth;
+            const newWidth = Math.max(50, startWidth + diffX);
+            const newHeight = Math.round(newWidth * ratio);
 
             const { from } = view.state.selection;
             const node = view.state.doc.nodeAt(from);
@@ -39,6 +60,7 @@ export const imageResizablePlugin = () =>
               const tr = view.state.tr.setNodeMarkup(from, null, {
                 ...node.attrs,
                 width: newWidth,
+                height: newHeight,
               });
               view.dispatch(tr);
             }
@@ -52,7 +74,6 @@ export const imageResizablePlugin = () =>
           window.addEventListener('mousemove', onMouseMove);
           window.addEventListener('mouseup', onMouseUp);
 
-          event.preventDefault();
           return true;
         },
       },

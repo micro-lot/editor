@@ -4,29 +4,38 @@
   display: inline-block;
   position: relative;
 
-  &.ProseMirror-selectednode {
-    &::after {
-      content: '';
-      position: absolute;
-      right: -6px;
-      bottom: -6px;
-      width: 12px;
-      height: 12px;
-      background-color: #22446c;
-      border: 2px solid white;
-      border-radius: 50%;
-      cursor: se-resize;
-      z-index: 10;
+  &:not(.ProseMirror-selectednode) {
+    .#{$base-class-name}-image-resize-handle {
+      display: none;
     }
   }
-}
 
-.#{$base-class-name}-image {
-  max-width: 100%;
-  height: auto;
-  display: block;
+  &.ProseMirror-selectednode {
+    .#{$base-class-name}-image-resize-handle {
+      display: block;
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: #4c9ffe;
+      border: 2px solid white;
+      border-radius: 50%;
+      z-index: 2;
 
-  &:not([data-width]) {
-    max-width: 300px;
+      &-right-bottom {
+        bottom: -6px;
+        right: -6px;
+        cursor: se-resize;
+      }
+    }
+  }
+
+  .#{$base-class-name}-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+
+    &:not([data-width]) {
+      max-width: 300px;
+    }
   }
 }

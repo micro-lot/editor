@@ -41,6 +41,8 @@ export const imageNode = (): Record<string, NodeSpec> => {
         'div',
         {
           class: `${CLASS_NAME_BASE}-image-wrapper`,
+          draggable: 'true',
+          contenteditable: 'false',
         },
         [
           'img',
@@ -51,6 +53,13 @@ export const imageNode = (): Record<string, NodeSpec> => {
             width: attrs.width,
             'data-width': attrs.width,
             style: `max-width: ${attrs.width}px`,
+            draggable: 'false',
+          },
+        ],
+        [
+          'div',
+          {
+            class: `${CLASS_NAME_BASE}-image-resize-handle ${CLASS_NAME_BASE}-image-resize-handle-right-bottom`,
           },
         ],
       ];
